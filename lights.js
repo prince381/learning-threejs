@@ -72,23 +72,23 @@ document.addEventListener('DOMContentLoaded',() => {
     // scene.add(hemiLight);
     // gui.add(hemiLight,'intensity',0,4);
 
-    // const spotLight = new THREE.SpotLight("#f9ca24");
-    // spotLight.intensity = 1;
-    // spotLight.castShadow = true;
-    // spotLight.shadow.mapSize.width = 1024 * 3;
-    // spotLight.shadow.mapSize.height = 1024 * 3;
-    // spotLight.angle = Math.PI / 4;
-    // spotLight.shadow.camera.near = 0.5;
-    // spotLight.shadow.camera.far = 100;
-    // spotLight.shadow.camera.fov = 50;
-    // scene.add(spotLight);
+    const spotLight = new THREE.SpotLight("#f9ca24");
+    spotLight.intensity = 1;
+    spotLight.castShadow = true;
+    spotLight.shadow.mapSize.width = 1024 * 3;
+    spotLight.shadow.mapSize.height = 1024 * 3;
+    spotLight.angle = Math.PI / 4;
+    spotLight.shadow.camera.near = 0.5;
+    spotLight.shadow.camera.far = 100;
+    spotLight.shadow.camera.fov = 50;
+    scene.add(spotLight);
 
-    // const spotlightFolder = gui.addFolder('Spotlight');
-    // spotlightFolder.add(spotLight,'intensity',.5,4);
-    // spotlightFolder.add(spotLight,'angle',Math.PI / 4,Math.PI * 2);
-    // spotlightFolder.add(spotLight.position,'x',-40,40);
-    // spotlightFolder.add(spotLight.position,'y',-40,40);
-    // spotlightFolder.add(spotLight.position,'z',-40,40);
+    const spotlightFolder = gui.addFolder('Spotlight');
+    spotlightFolder.add(spotLight,'intensity',.5,4);
+    spotlightFolder.add(spotLight,'angle',Math.PI / 4,Math.PI * 2);
+    spotlightFolder.add(spotLight.position,'x',-40,40);
+    spotlightFolder.add(spotLight.position,'y',-40,40);
+    spotlightFolder.add(spotLight.position,'z',-40,40);
 
     // const spotLightHelper = new THREE.SpotLightHelper(spotLight);
     // scene.add(spotLightHelper);
@@ -112,15 +112,15 @@ document.addEventListener('DOMContentLoaded',() => {
     // const pointHelper = new THREE.PointLightHelper(pointLight);
     // scene.add(pointHelper);
 
-    const directionalLight = new THREE.DirectionalLight('#e2e2e2',1);
-    directionalLight.position.set(0,20,0);
-    directionalLight.castShadow = true;
-    directionalLight.shadow.mapSize.width = 1024;
-    directionalLight.shadow.mapSize.height = 1024;
-    scene.add(directionalLight);
+    // const directionalLight = new THREE.DirectionalLight('#e2e2e2',1);
+    // directionalLight.position.set(0,20,0);
+    // directionalLight.castShadow = true;
+    // directionalLight.shadow.mapSize.width = 1024;
+    // directionalLight.shadow.mapSize.height = 1024;
+    // scene.add(directionalLight);
 
-    const lightHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
-    scene.add(lightHelper);
+    // const lightHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
+    // scene.add(lightHelper);
 
     function animate() {
         // let time = Date.now() * 0.0005;
@@ -128,11 +128,11 @@ document.addEventListener('DOMContentLoaded',() => {
 
         controls.update();
         renderer.render(scene,camera);
-        // spotLight.position.set(
-        //     camera.position.x + 5,
-        //     camera.position.y + 5,
-        //     camera.position.z + 5
-        // );
+        spotLight.position.set(
+            camera.position.x + 5,
+            camera.position.y + 5,
+            camera.position.z + 5
+        );
         requestAnimationFrame(animate);
     }
 
