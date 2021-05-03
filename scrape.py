@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup as soup
+import csv
 import webbrowser
 import sys
 
@@ -21,6 +22,15 @@ def get_html(url):
 
     res_soup = soup(res.text, 'html.parser')
     print(res_soup)
+
+# def to_csv(filename, data):
+#     with open(filename, 'w', newline=' ') as newfile:
+#         writer_file = csv.writer(newfile)
+
+#         for row in data:
+#             writer_file.writerow(row)
+
+#     newfile.close()
 
 commands = ['--open','-o','--html']
 usage_text = """
