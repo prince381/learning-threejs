@@ -61,8 +61,8 @@ document.addEventListener('DOMContentLoaded',() => {
 
     addCube(15);
 
-    const axes = new THREE.AxesHelper(50);
-    scene.add(axes);
+    // const axes = new THREE.AxesHelper(50);
+    // scene.add(axes);
 
     // const ambient = new THREE.AmbientLight("#f9ca24",1.5);
     // scene.add(ambient);
