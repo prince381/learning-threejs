@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded',() => {
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
-    // controls.enablePan = false;
+    controls.enablePan = false;
     controls.rotateSpeed = 0.1;
 
     output.appendChild(renderer.domElement);
