@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded',() => {
     renderer.setClearColor(new THREE.Color(0x000000));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.setPixelRatio(window.devicePixelRatio);
 
     camera.position.set(0,10,30);
     camera.lookAt(scene.position);
@@ -40,7 +41,7 @@ document.addEventListener('DOMContentLoaded',() => {
     const planeGeom = new THREE.PlaneGeometry(40,35);
     const planeMaterial = new THREE.MeshStandardMaterial({
         color: "#95a5a6",
-        metalness: 0
+        side: THREE.DoubleSide
     });
     const plane = new THREE.Mesh(planeGeom,planeMaterial);
     plane.receiveShadow = true;
@@ -58,9 +59,8 @@ document.addEventListener('DOMContentLoaded',() => {
     scene.add(sphere);
 
     const sphereDepthGeom = new THREE.SphereGeometry(3.5,50,50);
-    const sphereDepthMaterial = new THREE.MeshDepthMaterial({
-        transparent: true,
-        opacity: .9
+    const sphereDepthMaterial = new THREE.MeshStandardMaterial({
+        color: "crimson"
     });
     const sphereDepth = new THREE.Mesh(sphereDepthGeom, sphereDepthMaterial);
     sphereDepth.position.set(5,4,10);
@@ -80,6 +80,41 @@ document.addEventListener('DOMContentLoaded',() => {
     redCube.position.set(7,4,-8);
     scene.add(redCube);
 
+    const torusGeometry = new THREE.TorusGeometry(3,1,30,30);
+    const torusMat = new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color(0x2ffcba),
+        reflectivity: 0.2,
+        clearCoat: 1,
+        roughness: 0.2,
+        metalness: 0.5
+    })
+    const torus = new THREE.Mesh(torusGeometry, torusMat);
+    torus.position.set(-8,4,10);
+    torus.castShadow = true;
+    torus.receiveShadow = true;
+    scene.add(torus);
+
+    let torusParams = {
+        reflectivity: 0,
+        clearCoat: 0,
+        roughness: 0.5,
+        metalness: 0.5
+    };
+    const torusControl = gui.addFolder('Torus Controls');
+    torusControl.add(torusParams,'reflectivity',0,1,0.1).onChange(function(val) {
+        torusMat.reflectivity = val;
+    })
+    torusControl.add(torusParams,'clearCoat',0,1,0.1).onChange(function(val) {
+        torusMat.clearCoat = val;
+    })
+    torusControl.add(torusParams,'metalness',0,1,0.1).onChange(function(val) {
+        torusMat.metalness = val;
+    })
+    torusControl.add(torusParams,'roughness',0,1,0.1).onChange(function(val) {
+        torusMat.roughness = val;
+    })
+
+
     // lights
     const ambientLight = new THREE.AmbientLight("#f1c40f", 1);
     scene.add(ambientLight);
@@ -93,8 +128,8 @@ document.addEventListener('DOMContentLoaded',() => {
     spotLight.shadow.mapSize.height = 1024 * 2;
     scene.add(spotLight);
 
-    const spotLightHelper = new THREE.SpotLightHelper(spotLight);
-    scene.add(spotLightHelper);
+    // const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+    // scene.add(spotLightHelper);
 
     const spotFolder = gui.addFolder('SpotLight');
     spotFolder.add(spotLight,'angle', 0, 2 * Math.PI);
@@ -108,6 +143,8 @@ document.addEventListener('DOMContentLoaded',() => {
             camera.position.y + 5,
             camera.position.z + 5,
         );
+
+        torusMat.reflectivity = torusParams.reflectivity;
 
         renderer.render(scene, camera);
         requestAnimationFrame(animate);
